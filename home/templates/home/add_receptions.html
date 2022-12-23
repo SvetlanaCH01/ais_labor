@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css  %}
+   <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+<link href="{% static "/assets/dist/css/jumbotron.css" %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+{% include "home/parts/reception_nav_bar.html" %}
+
+  <div class="container">
+      <h1>Новый прием</h1>
+
+      {% if messages %}
+
+        {% for message in messages %}
+<div class="mt-1">
+
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+</div>
+
+        {% endfor %}
+
+    {% endif %}
+    <!-- Example row of columns -->
+<form action="{% url "home:add_reception" %}" method="post">
+
+{% csrf_token %}
+
+      <div class="form-group">
+    <label for="purpose_of_visit_id">Цель визита</label>
+    <select class="form-control" name="purpose_of_visit" id="purpose_of_visit_id">
+        {% for i in purpose_of_visits %}
+            <option value="{{i.pk}}">{{i}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="patient_id">Пациент</label>
+    <select class="form-control" name="patient" id="patient_id">
+        {% for i in pacients %}
+            <option value="{{i.pk}}">{{i}}</option>
+        {% endfor %}
+    </select>
+  </div>
+        <div class="form-group">
+    <label for="diagnosis_id">Диагноз</label>
+    <select class="form-control" name="diagnosis" id="diagnosis_id">
+        {% for i in diagnosis %}
+            <option value="{{i.pk}}">{{i}}</option>
+        {% endfor %}
+    </select>
+  </div>
+        <div class="form-group">
+    <label for="doctor_id">Доктор</label>
+    <select class="form-control" name="doctor" id="doctor_id">
+        {% for i in doctors %}
+            <option value="{{i.pk}}">{{i}}</option>
+        {% endfor %}
+    </select>
+  </div>
+
+      <div class="form-group">
+    <label for="purpose_of_visit_id">Рекомендации</label>
+    <input type="text"
+           required
+           name="clinical_guid"
+           value="{{clinical_guid}}"
+           class="form-control" id="clinical_guid_id" >
+  </div>
+
+  <button type="submit" class="btn btn-primary">Записать</button>
+</form>
+
+  </div>
+{% endblock %}

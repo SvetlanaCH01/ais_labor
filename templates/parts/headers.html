@@ -1,0 +1,35 @@
+{% load static %}
+{% if user.is_authenticated  %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="{% url 'home:index' %}">MedApp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      {% url "home:receptions" as url_receptions %}
+      {% url "home:diagnosis" as url_diagnosis %}
+      {% url "home:pacients" as url_pacients %}
+
+      <li class="nav-item {% if request.path == url_receptions %} active {% endif %}">
+        <a class="nav-link" href="{{url_receptions}}">Записи <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {% if request.path == url_diagnosis %} active {% endif %}">
+        <a class="nav-link" href="{{url_diagnosis}}">Диагнозы</a>
+      </li>
+      <li class="nav-item {% if request.path == url_pacients %} active {% endif %}">
+        <a class="nav-link" href="{{url_pacients}}">Пациенты</a>
+      </li>
+
+
+    </ul>
+
+    <div class="mx-1">
+        <a class="btn btn-outline-info my-2 my-sm-0" href="{% url "home:logout" %}">Выйти</a>
+    </div>
+
+
+  </div>
+</nav>
+{% endif %}

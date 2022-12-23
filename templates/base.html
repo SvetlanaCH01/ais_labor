@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "/assets/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    {% block css %}{% endblock %}
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+  {% include "parts/headers.html" %}
+    {% block content %}{% endblock %}
+
+    <footer class="container">
+
+</footer>
+
+    <script src="{% static "/assets/dist/js/jquery.slim.min.js" %}"></script>
+    <script src="{% static "/assets/dist/js/bootstrap.bundle.min.js" %}"></script>
+
+    {% block script %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign in{% endblock %}
+{% block body_class %}text-center{% endblock %}
+{% block css %}
+ <style>
+       body{
+         display:block!important;
+       }
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  <link href="{% static "/assets/dist/css/signin.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <form method="post" action="{% url "home:login" %}" class="form-signin">
+
+  <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+  <label for="login" class="sr-only">Логин</label>
+  <input type="text" id="login" name="login"  value="{{login}}" class="form-control" placeholder="Логин" required autofocus>
+  <label for="inputPassword" class="sr-only">Пароль</label>
+  <input type="password" id="inputPassword" value="{{password}}" name="password" class="form-control" placeholder="Пароль" required>
+    {% csrf_token %}
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+
+  {% if messages %}
+
+        {% for message in messages %}
+<div class="mt-1">
+
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+</div>
+
+        {% endfor %}
+
+    {% endif %}
+
+</form>
+
+
+{% endblock %}

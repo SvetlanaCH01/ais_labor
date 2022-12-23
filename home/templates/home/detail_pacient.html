@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css  %}
+   <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+<link href="{% static "/assets/dist/css/jumbotron.css" %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+{% include "home/parts/pacient_nav_bar.html" %}
+
+  <div class="container">
+      <h1>{{pacient.get_full_name}}</h1>
+      <ul>
+          <li>ФИО: {{pacient.get_full_name}}</li>
+          <li>Дата рождения: {{pacient.date_of_birth|date:'Y-m-d'}}</li>
+          <li>Паспорт: {{pacient.passport_ID}}</li>
+          <li>Адрес: {{pacient.address}}</li>
+          <li>Номер телефона: {{pacient.phone_number}}</li>
+
+      </ul>
+
+      {% if messages %}
+
+        {% for message in messages %}
+<div class="mt-1">
+
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+</div>
+
+        {% endfor %}
+
+    {% endif %}
+    <!-- Example row of columns -->
+
+
+  </div>
+{% endblock %}

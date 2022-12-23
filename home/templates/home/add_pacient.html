@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css  %}
+   <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+<link href="{% static "/assets/dist/css/jumbotron.css" %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+{% include "home/parts/pacient_nav_bar.html" %}
+
+  <div class="container">
+      <h1>Новый пациент</h1>
+
+      {% if messages %}
+
+        {% for message in messages %}
+<div class="mt-1">
+
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+</div>
+
+        {% endfor %}
+
+    {% endif %}
+    <!-- Example row of columns -->
+<form action="{% url "home:add_pacient" %}" method="post">
+
+{% csrf_token %}
+      <div class="form-group">
+    <label for="surname_id">Фамилия</label>
+    <input type="text" required name="surname" value="{{surname}}" class="form-control" id="surname_id" aria-describedby="surname_idHelp">
+  </div>
+      <div class="form-group">
+    <label for="name_id">Имя</label>
+    <input type="text" required  name="name" value="{{name}}" class="form-control" id="name_id" aria-describedby="name_idHelp">
+  </div>
+      <div class="form-group">
+    <label for="patronymic_id">Отчество</label>
+    <input type="text" name="patronymic" value="{{patronymic}}" class="form-control" id="patronymic_id" aria-describedby="patronymic_idHelp">
+  </div>
+      <div class="form-group">
+    <label for="surname_id">Дата рождения</label>
+    <input type="date" required  name="date_of_birth" value="{{date_of_birth|date:'Y-m-d'}}" class="form-control" id="date_of_birth_id" aria-describedby="date_of_birth_idHelp">
+  </div>
+      <div class="form-group">
+    <label for="passport_ID_id">Паспорт</label>
+    <input type="text" required  name="passport_ID" value="{{passport_ID}}" class="form-control" id="passport_ID_id" aria-describedby="passport_ID_idHelp">
+  </div>
+      <div class="form-group">
+        <label for="address_id">Адрес</label>
+        <input type="text" name="address" value="{{address}}" class="form-control" id="address_id" aria-describedby="address_idHelp">
+      </div>
+      <div class="form-group">
+        <label for="phone_number_id">Номер телефона</label>
+        <input type="text" required  name="phone_number" value="{{phone_number}}" class="form-control" id="phone_number_id" aria-describedby="phone_number_idHelp">
+      </div>
+  <button type="submit" class="btn btn-primary">Записать</button>
+</form>
+
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static "/assets/dist/js/jquery.maskedinput.min.js" %}"></script>
+<script>
+    $(function(){
+        $("#phone_number_id").mask("+7(999) 999-9999", {placeholder: "+7(999) 999-9999" });
+    });
+
+    $("#passport_ID_id").mask("9999 999999", {placeholder: "1234 123456" });
+</script>
+{% endblock %}
